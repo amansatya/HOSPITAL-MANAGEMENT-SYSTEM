@@ -2,12 +2,39 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Scanner;
+
 public class doctor
 {
     private Connection connection;
-    public doctor(Connection connection)
+    private Scanner scanner;
+    public doctor(Connection connection, Scanner scanner)
     {
         this.connection = connection;
+        this.scanner = scanner;
+    }
+    public void addDoctor()
+    {
+        System.out.print("Enter Doctor Name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter Doctor Specialization: ");
+        String specialization = scanner.nextLine();
+        try
+        {
+            String query = "INSERT INTO doctors(name, specialization) VALUES(?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, specialization);
+            int affectedRows = preparedStatement.executeUpdate();
+            if(affectedRows>0)
+                System.out.println("Doctor Added Successfully!!");
+            else
+                System.out.println("Failed to add Doctor!!");
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
     public void viewDoctors()
     {

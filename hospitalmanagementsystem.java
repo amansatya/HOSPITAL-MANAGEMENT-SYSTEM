@@ -20,18 +20,19 @@ public class hospitalmanagementsystem
         {
             Connection connection = DriverManager.getConnection(url, username, password);
             patient patient = new patient(connection, scanner);
-            doctor doctor = new doctor(connection);
+            doctor doctor = new doctor(connection, scanner);
             appointments appointments=new appointments();
             while (true)
             {
                 System.out.println("HOSPITAL MANAGEMENT SYSTEM ");
                 System.out.println("1. Add Patient");
                 System.out.println("2. View Patients");
-                System.out.println("3. View Doctors");
-                System.out.println("4. Book Appointment");
-                System.out.println("5. View All Appointments");
-                System.out.println("6. Delete Appointment");
-                System.out.println("7. Exit");
+                System.out.println("3. Add Doctor");
+                System.out.println("4. View Doctors");
+                System.out.println("5. Book Appointment");
+                System.out.println("6. View All Appointments");
+                System.out.println("7. Delete Appointment");
+                System.out.println("8. Exit");
                 System.out.print("Enter your choice: ");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
@@ -46,22 +47,26 @@ public class hospitalmanagementsystem
                         System.out.println();
                         break;
                     case 3:
-                        doctor.viewDoctors();
+                        doctor.addDoctor();
                         System.out.println();
                         break;
                     case 4:
-                        appointments.bookAppointment(patient, doctor, connection, scanner);
+                        doctor.viewDoctors();
                         System.out.println();
                         break;
                     case 5:
-                        appointments.viewAppointments(connection);
+                        appointments.bookAppointment(patient, doctor, connection, scanner);
                         System.out.println();
                         break;
                     case 6:
-                        appointments.deleteAppointment(connection, scanner);
+                        appointments.viewAppointments(connection);
                         System.out.println();
                         break;
                     case 7:
+                        appointments.deleteAppointment(connection, scanner);
+                        System.out.println();
+                        break;
+                    case 8:
                         System.out.println("THANK YOU! FOR USING HOSPITAL MANAGEMENT SYSTEM!!");
                         return;
                     default:
